@@ -1,5 +1,5 @@
-module "network" {
-  source = "../modules/networking"
+module "aws_vpc" {
+  source = "../modules/vpc"
 
   project_name                 = var.project_name
   vpc_cidr                     = var.vpc_cidr
