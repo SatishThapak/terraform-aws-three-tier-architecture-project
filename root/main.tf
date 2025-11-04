@@ -23,3 +23,9 @@ module "nat_gateway" {
   private_data_subnet_az1_id  = module.aws_vpc.private_db_subnets[0]
   private_data_subnet_az2_id  = module.aws_vpc.private_db_subnets[1]
 }
+
+module "security_groups" {
+  source       = "../modules/security_groups"
+  project_name = var.project_name
+  vpc_id       = module.vpc.vpc_id
+}
