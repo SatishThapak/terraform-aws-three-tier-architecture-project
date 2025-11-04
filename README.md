@@ -23,7 +23,7 @@ Each tier is protected and scaled using **Auto Scaling Groups**, **Health Checks
 
 ## 📊 Architecture Diagram
 
-![3-Tier Architecture](https://github.com/user-attachments/assets/abd4751a-482e-4f5d-9fc3-0b85347a0f7c)
+![Architecture Diagram](assets/architecture-diagram.png)
 
 ---
 
