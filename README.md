@@ -1,92 +1,77 @@
-# terraform-aws-three-tier-architecture-project
-terraform-aws-three-tier-architecture-project
-# ### terraform-aws-three-tier-architecture
+# 🌐 3-Tier Web Application Architecture on AWS
 
-This immersive workshop guides you through building a **three-tier web architecture on AWS using Terraform**. The project automates the provisioning of **networking, security, compute, and data layers**, resulting in a resilient and highly scalable infrastructure.
-
-![3-Tier Architecture](assets/3-tier-architecture.png)
+This repository demonstrates a scalable and highly available 3-tier architecture deployed on AWS. It separates concerns across the web, application, and database tiers to ensure modularity, performance, and resilience.
 
 ---
 
-## 🏗️ Architecture Overview
+## 🧱 Architecture Overview
 
-### 1️⃣ Public-Facing Application Load Balancer (ALB)
-- Accepts external HTTP/S traffic.
-- Routes requests to EC2 instances in the **Web Tier**.
+In this architecture:
 
-### 2️⃣ Web Tier – EC2 Instances with Nginx & React.js
-- Serves static files and frontend content.
-- Forwards API requests to an **Internal ALB**.
+- A **public-facing Application Load Balancer (ALB)** routes client traffic to the **Web Tier**.
+- The **Web Tier** consists of EC2 instances running **Nginx**, which:
+  - Serve a **React.js** frontend
+  - Proxy API requests to the **Application Tier**
+- An **internal-facing ALB** forwards API traffic to the **Application Tier**, which:
+  - Runs **Node.js** services
+  - Processes business logic and interacts with the database
+- The **Database Tier** uses **Amazon Aurora MySQL (Multi-AZ)** for high availability and data durability.
 
-### 3️⃣ Internal Application Load Balancer
-- Receives API calls from the Web Tier.
-- Routes traffic to backend services in the App Tier.
-
-### 4️⃣ Application Tier – EC2 Instances with Node.js
-- Handles business logic and service processing.
-- Connects to the **Aurora MySQL database**.
-
-### 5️⃣ Data Layer – Aurora MySQL (Multi-AZ)
-- Fault-tolerant, highly available database.
-- Multi-AZ setup ensures durability and disaster recovery.
-
-### 6️⃣ Return Flow
-- App Tier → Internal ALB → Web Tier → Public ALB → Client
+Each tier is protected and scaled using **Auto Scaling Groups**, **Health Checks**, and **Load Balancers**.
 
 ---
 
-## 📈 Scalability and Resilience
+## 📊 Architecture Diagram
 
-| Component               | Role                                                                 |
-|------------------------|----------------------------------------------------------------------|
-| **Load Balancers**      | Manage incoming traffic and route it efficiently                    |
-| **Health Checks**       | Detect and replace unhealthy instances                              |
-| **Auto Scaling Groups** | Scale resources dynamically based on demand                         |
+![3-Tier Architecture](https://github.com/user-attachments/assets/abd4751a-482e-4f5d-9fc3-0b85347a0f7c)
 
 ---
 
-## 🔧 Project Breakdown
+## 🚀 Technologies Used
 
-### Part 1: Networking and Security
-- VPC, Subnets, Route Tables
-- Internet & NAT Gateways
-- Security Groups
-
-### Part 2: Database Deployment
-- Subnet Groups
-- Aurora MySQL (Multi-AZ)
-
-### Part 3: App Tier Deployment
-- EC2 Instance with Node.js
-- Database schema setup
-- Connectivity validation
-
-### Part 4: Internal Load Balancer & Auto Scaling
-- AMI from App Tier
-- Launch Template & Autoscaling
-- Internal ALB Deployment
-
-### Part 5: Web Tier Deployment
-- Nginx Configuration
-- React frontend setup
-- EC2 Deployment
-
-### Part 6: External Load Balancer & Auto Scaling
-- AMI from Web Tier
-- Launch Template & Autoscaling
-- Public ALB Deployment
+- **Frontend**: React.js
+- **Web Server**: Nginx on EC2
+- **Backend**: Node.js on EC2
+- **Database**: Amazon Aurora MySQL (Multi-AZ)
+- **Load Balancing**: AWS Application Load Balancer (public and internal)
+- **Scaling & Resilience**: Auto Scaling Groups, Health Checks
 
 ---
 
-## 🚀 Getting Started
+## 📦 Project Structure
 
-Clone the repo and spin up your infrastructure using Terraform:
+. ├── web-tier/ │ └── react-app/ ├── app-tier/ │ └── node-api/ ├── infra/ │ └── terraform/ or cloudformation/ └── README.md
 
-```bash
-git clone https://github.com/SatishThapak/terraform-aws-three-tier-architecture.git
-cd terraform-aws-three-tier-architecture
 
-terraform validate       # Validate config changes
-terraform init           # Initialize Terraform working directory
-terraform plan           # Preview planned changes
-terraform apply          # Apply changes and deploy infra
+---
+
+## 🛠️ Deployment Notes
+
+- Ensure your AWS environment is configured with appropriate IAM roles and VPC setup.
+- Use Terraform or CloudFormation templates in the `infra/` directory to provision infrastructure.
+- Deploy the React app to the web-tier EC2 instances and configure Nginx to serve it.
+- Set up Nginx to proxy `/api` routes to the internal ALB.
+- Deploy Node.js services to the app-tier EC2 instances.
+- Connect the app-tier to the Aurora MySQL cluster using secure credentials.
+
+---
+
+## 📌 Best Practices
+
+- Use **HTTPS** with SSL termination at the public ALB.
+- Enable **CloudWatch monitoring** and **logging** for all tiers.
+- Apply **security groups** and **network ACLs** to restrict access between tiers.
+- Use **parameter store** or **Secrets Manager** for managing sensitive data.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 🙌 Contributions
+
+Feel free to fork this repo, submit issues, or open pull requests to improve the architecture or documentation.
+
