@@ -3,7 +3,8 @@ terraform-aws-three-tier-architecture-project
 
 This immersive workshop guides you through building a **three-tier web architecture on AWS using Terraform**. The project automates the provisioning of **networking, security, compute, and data layers**, resulting in a resilient and highly scalable infrastructure.
 
-![3-Tier Architecture](https://github.com/user-attachments/assets/abd4751a-482e-4f5d-9fc3-0b85347a0f7c)
+<img width="1214" height="548" alt="3TierArch" src="https://github.com/user-attachments/assets/dc496e6e-2cb1-47bb-929b-bc854306ddfd" />
+
 
 ---
 
