@@ -38,6 +38,26 @@ variable "private_data_subnet_az2_cidr" {
   description = "CIDR block for private DB subnet in AZ2"
 }
 
+variable "instance_class" {
+  
+}
 
+variable "allocated_storage" {
+  
+}
+variable "db_password" {
+  
+}
 
-
+variable "db_username" {
+  
+}
+variable "db_name" {
+  
+}
+variable "backup_retention_days" {
+  
+}
+variable "allowed_cidr_blocks" {
+  
+}

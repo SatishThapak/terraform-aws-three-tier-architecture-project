@@ -29,3 +29,18 @@ module "security_groups" {
   project_name = var.project_name
   vpc_id       = module.aws_vpc.vpc_id
 }
+
+module "rds_instance" {
+  source = "./modules/rds_instance"
+
+  project_name          = var.project_name
+  instance_class        = var.instance_class
+  allocated_storage     = var.allocated_storage
+  db_username           = var.db_username
+  db_password           = var.db_password
+  db_name               = var.db_name
+  backup_retention_days = var.backup_retention_days
+
+  private_db_sg_id      = module.security_groups.private_db_sg_id
+  db_subnet_group_name  = aws_db_subnet_group.db_subnet_group.name
+}
