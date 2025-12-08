@@ -12,16 +12,16 @@ module "aws_vpc" {
 }
 
 module "nat_gateway" {
-  source = "../modules/nat_gateway"
-  project_name                = var.project_name
-  vpc_id                      = module.aws_vpc.vpc_id
-  internet_gateway_id         = module.aws_vpc.internet_gateway_id
-  public_subnet_az1_id        = module.aws_vpc.public_subnets[0]
-  public_subnet_az2_id        = module.aws_vpc.public_subnets[1]
-  private_app_subnet_az1_id   = module.aws_vpc.private_app_subnets[0]
-  private_app_subnet_az2_id   = module.aws_vpc.private_app_subnets[1]
-  private_data_subnet_az1_id  = module.aws_vpc.private_db_subnets[0]
-  private_data_subnet_az2_id  = module.aws_vpc.private_db_subnets[1]
+  source                     = "../modules/nat_gateway"
+  project_name               = var.project_name
+  vpc_id                     = module.aws_vpc.vpc_id
+  internet_gateway_id        = module.aws_vpc.internet_gateway_id
+  public_subnet_az1_id       = module.aws_vpc.public_subnets[0]
+  public_subnet_az2_id       = module.aws_vpc.public_subnets[1]
+  private_app_subnet_az1_id  = module.aws_vpc.private_app_subnets[0]
+  private_app_subnet_az2_id  = module.aws_vpc.private_app_subnets[1]
+  private_data_subnet_az1_id = module.aws_vpc.private_db_subnets[0]
+  private_data_subnet_az2_id = module.aws_vpc.private_db_subnets[1]
 }
 
 module "security_groups" {
@@ -30,17 +30,16 @@ module "security_groups" {
   vpc_id       = module.aws_vpc.vpc_id
 }
 
-module "rds_instance" {
-  source = "./modules/rds_instance"
-
+module "rds" {
+  source                = "../modules/rds"
   project_name          = var.project_name
-  instance_class        = var.instance_class
-  allocated_storage     = var.allocated_storage
+  private_db_subnets    = module.aws_vpc.private_db_subnets
+  private_db_sg_id      = module.security_groups.private_db_sg_id
   db_username           = var.db_username
   db_password           = var.db_password
-  db_name               = var.db_name
   backup_retention_days = var.backup_retention_days
-
-  private_db_sg_id      = module.security_groups.private_db_sg_id
-  db_subnet_group_name  = aws_db_subnet_group.db_subnet_group.name
+  instance_class        = var.instance_class
+  allowed_cidr_blocks   = var.allowed_cidr_blocks
 }
+
+

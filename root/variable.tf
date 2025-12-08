@@ -39,25 +39,36 @@ variable "private_data_subnet_az2_cidr" {
 }
 
 variable "instance_class" {
-  
+
 }
 
 variable "allocated_storage" {
-  
+
 }
 variable "db_password" {
-  
+
 }
 
 variable "db_username" {
-  
+
 }
 variable "db_name" {
-  
+
 }
 variable "backup_retention_days" {
-  
+
 }
 variable "allowed_cidr_blocks" {
-  
+
+}
+variable "db_engine" {
+
+}
+variable "db_engine_version" {
+
+}
+variable "multi_az" {
+  description = "Enable Multi-AZ deployment for RDS"
+  type        = bool
+  default     = true
 }
